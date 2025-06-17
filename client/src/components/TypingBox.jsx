@@ -118,20 +118,23 @@ const TypingBox = ({ duration, includeUpper, includeSpecial }) => {
             </span>
           </div>
 
-          <div className="typing-area h-40 overflow-y-auto bg-gray-100 dark:bg-gray-700 p-4 rounded-md mb-4 text-lg font-mono leading-relaxed">
-            {words.map((word, idx) => {
-              const isActive = idx === currentWordIndex;
-              const className = isActive
-                ? "bg-indigo-200 dark:bg-indigo-600 text-black dark:text-white rounded px-1"
-                : "";
+          <div className="typing-area h-80 overflow-y-auto bg-gray-100 dark:bg-gray-700 p-4 rounded-md mb-4 text-3xl font-mono leading-relaxed break-words">
+            <div className="flex flex-wrap gap-2">
+                {words.map((word, idx) => {
+                const isActive = idx === currentWordIndex;
+                const className = isActive
+                    ? "bg-indigo-200 dark:bg-indigo-600 text-black dark:text-white rounded px-1"
+                    : "";
 
-              return (
-                <span key={idx} className={`mr-2 ${className}`}>
-                  {isActive ? getCharStyles(word, typed) : word}
-                </span>
-              );
-            })}
+                return (
+                    <span key={idx} className={`${className}`}>
+                    {isActive ? getCharStyles(word, typed) : word}
+                    </span>
+                );
+                })}
+            </div>
           </div>
+
 
           <input
             type="text"
