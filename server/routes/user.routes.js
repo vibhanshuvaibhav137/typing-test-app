@@ -1,15 +1,12 @@
 import { Router } from "express";
 import { changeCurrentPassword,
     getCurrentUser,
-    getUserChannelProfile,
-    getWatchHistory,
     loginUser,
     logoutUser, 
     refreshAccessToken, 
     registerUser, 
-    updateAccountDetails, 
-    updateUserAvatar, 
-    updateUserCoverImage } from "../controllers/user.controller.js";
+    updateAccountDetails,  } from "../controllers/user.controller.js";
+import { verifyJWT } from "../middleware/auth.middleware.js";
 
 
 const router = Router()

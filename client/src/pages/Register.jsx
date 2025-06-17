@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 
 const Register = () => {
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  const [formData, setFormData] = useState({ fullName: "", username: "", email: "", password: "" });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,7 +13,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/auth/register", formData);
+      await api.post("/register", formData);
+      alert("Register successfull ");
       navigate("/login");
     } catch (err) {
       console.error("Registration failed:", err.response?.data?.msg || err.message);
@@ -25,6 +26,15 @@ const Register = () => {
     <div className="max-w-md mx-auto p-6 mt-10 bg-white dark:bg-gray-800 rounded shadow">
       <h2 className="text-xl font-semibold mb-4 text-center text-gray-800 dark:text-white">Register</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          name="fullName"
+          placeholder="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+          className="w-full p-2 border rounded dark:bg-gray-900 dark:text-white"
+          required
+        />
         <input
           type="text"
           name="username"

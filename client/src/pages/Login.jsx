@@ -15,9 +15,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/login", formData);
+      const res = await api.post("/login", formData);
       login(res.data); // store token and user in context
-      navigate("/dashboard");
+      navigate("/");
+       alert("Login successfull ");
     } catch (err) {
       alert("Login failed: " + (err.response?.data?.msg || "Check credentials"));
     }
