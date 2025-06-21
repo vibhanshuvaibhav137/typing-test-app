@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/user.model.js"
+import { Result } from "../models/result.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
@@ -33,6 +34,7 @@ const registerUser = asyncHandler(async (req, res)=> {
 
     const {fullName, email, username, password } = req.body
     //console.log("email", email);
+    console.log("BODY RECEIVED:", req.body);
 
     if(
         [fullName, email, username, password].some((field)=>
@@ -247,6 +249,36 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
 
 })
 
+const storeTypingResults = asyncHandler(async(req, res) => {
+    const { wpm, accuracy, duration} = req.body
+
+    if (!wpm || !accuracy || !duration) {
+        throw new ApiError(400, "All fields (wpm, accuracy, duration) are required");
+    }
+
+    const result = await Result.create({
+        user : req.user._id,
+        wpm,
+        accuracy,
+        duration
+    })
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, result, "Result Saved successfully"))
+
+})
+
+const getTypingResults = asyncHandler( async(req, res) => {
+    const userId = req.user._id
+    const results = await Result.find({ user: userId }).sort({ createdAt: -1 });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, results, "Typing results fetched successfully"));
+
+})
+
 
 
 
@@ -257,5 +289,7 @@ export {
     refreshAccessToken,
     changeCurrentPassword,
     getCurrentUser,
-    updateAccountDetails 
+    updateAccountDetails,
+    storeTypingResults,
+    getTypingResults
 }
