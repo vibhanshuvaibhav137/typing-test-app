@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import api from "../utils/api"; // use central axios config
 
@@ -25,7 +25,7 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 mt-10 bg-white dark:bg-gray-800 rounded shadow">
+    <div className="flex-col max-w-md mx-auto p-6 mt-10 bg-white dark:bg-gray-800 rounded shadow">
       <h2 className="text-xl font-semibold mb-4 text-center text-gray-800 dark:text-white">Login</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -49,7 +49,15 @@ const Login = () => {
         <button type="submit" className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700">
           Login
         </button>
+
       </form>
+
+      <p className="mt-4 text-center text-sm text-gray-700 dark:text-gray-300">
+        Don&apos;t have an account?{" "}
+        <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:underline">
+          Register
+        </Link>
+      </p>
     </div>
   );
 };
