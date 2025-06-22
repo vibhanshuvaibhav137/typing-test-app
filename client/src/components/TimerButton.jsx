@@ -13,6 +13,7 @@ const TimerButtons = ({ onSelect }) => {
         </button>
       ))}
     </div>
+    
   );
 };
 
