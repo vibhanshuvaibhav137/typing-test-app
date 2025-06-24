@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import api from '../services/api';
 
 const TypingContext = createContext();
@@ -13,7 +13,9 @@ const typingReducer = (state, action) => {
         currentIndex: 0,
         typedText: '',
         errors: 0,
-        timeElapsed: 0
+        timeElapsed: 0,
+        isCompleted: false,
+        finalStats: null
       };
     case 'UPDATE_TYPING':
       return {
@@ -33,7 +35,7 @@ const typingReducer = (state, action) => {
     case 'RESET_TEST':
       return {
         ...initialState,
-        testText: state.testText
+        results: state.results // Preserve results when resetting test
       };
     case 'SET_TEST_TEXT':
       return {
@@ -44,6 +46,11 @@ const typingReducer = (state, action) => {
       return {
         ...state,
         results: action.payload
+      };
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.payload
       };
     default:
       return state;
@@ -59,20 +66,21 @@ const initialState = {
   startTime: null,
   timeElapsed: 0,
   errors: 0,
-  duration: 60, // seconds
+  duration: 60,
   results: [],
-  finalStats: null
+  finalStats: null,
+  loading: false
 };
 
 export const TypingProvider = ({ children }) => {
   const [state, dispatch] = useReducer(typingReducer, initialState);
 
-  const startTest = (testText) => {
+  const startTest = useCallback((testText) => {
     dispatch({ type: 'SET_TEST_TEXT', payload: testText });
     dispatch({ type: 'START_TEST' });
-  };
+  }, []);
 
-  const updateTyping = (typedText) => {
+  const updateTyping = useCallback((typedText) => {
     if (!state.isActive) return;
 
     const currentIndex = typedText.length;
@@ -86,51 +94,40 @@ export const TypingProvider = ({ children }) => {
       }
     }
 
-    // Check if test is completed
-    if (currentIndex >= state.testText.length || timeElapsed >= state.duration) {
-      const wpm = Math.round((typedText.length / 5) / (timeElapsed / 60));
-      const accuracy = Math.round(((typedText.length - errors) / typedText.length) * 100) || 0;
-      
-      const finalStats = {
-        wpm,
-        accuracy,
-        duration: Math.round(timeElapsed),
-        totalCharacters: typedText.length,
-        errors
-      };
-
-      dispatch({ type: 'FINISH_TEST', payload: finalStats });
-      return finalStats;
-    }
-
     dispatch({
       type: 'UPDATE_TYPING',
       payload: { typedText, currentIndex, errors, timeElapsed }
     });
-  };
+  }, [state.isActive, state.startTime, state.testText]);
 
-  const resetTest = () => {
+  const resetTest = useCallback(() => {
     dispatch({ type: 'RESET_TEST' });
-  };
+  }, []);
 
-  const saveResult = async (resultData) => {
+  const saveResult = useCallback(async (resultData) => {
     try {
-      await api.post('/users/save-result', resultData);
+      const response = await api.post('/users/save-result', resultData);
+      console.log('Result saved:', response.data);
       return { success: true };
     } catch (error) {
+      console.error('Error saving result:', error);
       return { success: false, error: error.response?.data?.message };
     }
-  };
+  }, []);
 
-  const getResults = async () => {
+  const getResults = useCallback(async () => {
     try {
+      dispatch({ type: 'SET_LOADING', payload: true });
       const response = await api.post('/users/get-result');
       dispatch({ type: 'SET_RESULTS', payload: response.data.data });
       return { success: true, data: response.data.data };
     } catch (error) {
+      console.error('Error fetching results:', error);
       return { success: false, error: error.response?.data?.message };
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
-  };
+  }, []);
 
   return (
     <TypingContext.Provider value={{

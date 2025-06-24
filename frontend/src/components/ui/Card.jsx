@@ -5,7 +5,7 @@ const Card = ({ className, children, ...props }) => {
   return (
     <div
       className={cn(
-        'bg-white rounded-xl shadow-sm border border-gray-200',
+        'bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 transition-colors',
         className
       )}
       {...props}
@@ -40,7 +40,7 @@ const CardContent = ({ className, children, ...props }) => {
 const CardTitle = ({ className, children, ...props }) => {
   return (
     <h3
-      className={cn('text-xl font-semibold text-gray-900', className)}
+      className={cn('text-xl font-semibold text-gray-900 dark:text-gray-100 transition-colors', className)}
       {...props}
     >
       {children}
