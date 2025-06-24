@@ -196,17 +196,7 @@ const LoginForm = () => {
           </CardContent>
         </Card>
 
-        {/* Footer */}
-        <p className="text-center text-xs text-gray-500 dark:text-gray-400">
-          By signing in, you agree to our{' '}
-          <a href="#" className="underline hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-            Terms of Service
-          </a>{' '}
-          and{' '}
-          <a href="#" className="underline hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-            Privacy Policy
-          </a>
-        </p>
+        
       </div>
     </div>
   );
