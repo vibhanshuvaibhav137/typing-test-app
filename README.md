@@ -274,20 +274,21 @@ COOKIE_EXPIRE=7
 
 ## 📱 Screenshots
 
-### Authentication & Login
-![Login Page](![image1](image1))
-*Secure login interface with clean, modern design*
+### Authentication : Login & Registration
+![Login Page](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/58381d07d962bb36dc513456ffc20af846e2ea06/001.png)
+![Registration Page](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/58381d07d962bb36dc513456ffc20af846e2ea06/002.png)
+*Secure login & Registration interface with clean, modern design*
 
 ### Homepage & Features
 ![Homepage](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/5c985916500924e0df3fffb8b3ad62b98110471e/003.png)
 *Landing page showcasing key features and benefits*
 
 ### Typing Test Interface
-![Typing Test](![image3](image3))
+![Typing Test](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/58381d07d962bb36dc513456ffc20af846e2ea06/004.png)
 *Interactive typing test with real-time feedback and statistics*
 
 ### Dashboard & Analytics
-![Dashboard](![image4](image4))
+![Dashboard](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/58381d07d962bb36dc513456ffc20af846e2ea06/005.png)
 *Comprehensive dashboard with performance metrics and test history*
 
 ## 🤝 Contributing
