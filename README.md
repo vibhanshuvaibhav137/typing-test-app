@@ -279,7 +279,7 @@ COOKIE_EXPIRE=7
 *Secure login interface with clean, modern design*
 
 ### Homepage & Features
-![Homepage](![image2]([image2](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/5c985916500924e0df3fffb8b3ad62b98110471e/003.png)))
+![Homepage](https://github.com/vibhanshuvaibhav137/typing-test-app/blob/5c985916500924e0df3fffb8b3ad62b98110471e/003.png)
 *Landing page showcasing key features and benefits*
 
 ### Typing Test Interface
